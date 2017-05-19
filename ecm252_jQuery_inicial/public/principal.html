@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <meta charset="UTF-8">
+      <title>ECM252 - jQuery</title>
+      <link rel="stylesheet" type="text/css" href="css/estilos.css">
+      <link rel="stylesheet" type="text/css" href="css/index.css">
+      <link rel="stylesheet" type="text/css" href="css/libs/google-fonts.css">
+      <script src="js/jquery.js"></script>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+   </head>
+   <body>
+      <div class="container">
+      <!-- Logo Mauá -->
+      <img src="img/maua_logo.png" class = "logo">
+      <!-- Frase aleatória -->
+      <div class="frase" class="Material Icons">Como é servir dalouka</div>
+      <!-- Botoes em cima do quadro -->
+      <div class="centraliza">
+         <i class="small material-icons"> description </i>
+         <div>19 palavras</div>
+      </div>
+      <div class="centraliza">
+         <i class="small material-icons"> query_builder </i>
+         <div> 10 segundos </div>
+      </div>
+      <!-- Quadro digitação -->
+      <p class="campo-digitacao">Teste</p>
+      <!-- Botões abaixo do quadro-->
+      <script type="text/javascript" src="js/jquery.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <a class="btn-floating btn-large waves-effect waves-light red" ><i class="material-icons">restore</i></a>
+      <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">assignment</i></a>
+      <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">shuffle</i></a>
+      <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">repeat_one</i></a>
+      <!-- Selecionar nome -->
+      <div class="select-usuarios">
+         <div class="input-field col s12">
+            <select class="browser-default">
+               <option value="" disabled selected>Choose your option</option>
+               <option value="1">Option 1</option>
+               <option value="2">Option 2</option>
+               <option value="3">Option 3</option>
+            </select>
+         </div>
+      </div>
+      <div class="direita"><a class="btn-floating btn-large waves-effect waves-light yellow"><i class="material-icons" id="botao-sync">swap_vert</i></a></div>
+      <div class="centraliza"> 0 caracteres</div>
+      <div class="centraliza"> 0 palavras</div>
+      <script>
+         $(document).ready(function() {
+             $('select').material_select();
+             $('.tooltipped').tooltip({delay: 50});
+         });
+        
+   
+        
+      </script>
+   </body>
+</html>
