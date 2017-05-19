@@ -51,23 +51,27 @@
       <div class="centraliza"> 0 caracteres</div>
       <div class="centraliza"> 0 palavras</div>
       <script>
+	  
          $(document).ready(function() {
              $('select').material_select();
              $('.tooltipped').tooltip({delay: 50});
          });
         
-		
+	
+	
 	var atualiza = function(){
 	
-	var texto = $(".campo-digitacao").value;
+	var campo = $(".campo-digitacao");
+	var texto = $(".campo-digitacao").val(); //pega o texto digitado
 	var frase =  $(".frase").text();
-	console.log(texto);
-    if (texto==frase){
 	
+
+    if (texto==frase){
+		campo.css("border","3px solid green");
         console.log("TEXTO IGUAL");
        
 		} else if (texto!=frase){
-		
+		campo.css("border","3px solid red");
         console.log("TEXTO DIFERENTE");
 		
 		}
@@ -75,7 +79,7 @@
 	}
 		
 	
-	$(".campo-digitacao").on('input',atualiza);
+	$(".campo-digitacao").on('input',atualiza); //função atualiza é executada  toda vez que o textarea muda
 	
 	
    
