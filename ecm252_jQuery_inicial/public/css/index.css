@@ -1,29 +1,37 @@
-.card{
-	width: 49%;
-	display: inline-block;
-	vertical-align: top;
+.card {
+    width: 49%;
+    display: inline-block;
+    vertical-align: top;
 }
 
-
-#botao-jogue{
-	width: 150px;
-	display: block;
-	margin: 50px auto;
+#botao-jogue {
+    width: 150px;
+    display: block;
+    margin: 50px auto;
 }
 
 .imagem-jogo {
-	border: 2px solid gray;
+    border: 2px solid gray;
 }
 
 .slider {
-	height: auto;
+    height: auto;
 }
 
-.slick-prev:before, .slick-next:before{
-	color: black;
+.slick-prev:before,
+.slick-next:before {
+    color: black;
 }
-.esquerda{
-    
-    float:left;
-    
+
+.esquerda {
+    float: left;
+}
+
+.center-cols > .col {
+    float: none;
+    /* disable the float */
+    display: inline-block;
+    /* make blocks inline-block */
+    text-align: initial;
+    /* restore text-align to default */
 }
