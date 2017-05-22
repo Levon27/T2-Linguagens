@@ -21,7 +21,7 @@
         <!-- Logo Mauá -->
         <img src="img/maua_logo.png" class="logo">
         <!-- Frase aleatória -->
-        <div class="frase" class="Material Icons">la lo la la</div>
+        <div class="frase" class="Material Icons"></div>
         <!-- Botoes em cima do quadro -->
         <div class="centraliza">
             <i class="small material-icons"> description </i>
@@ -86,7 +86,91 @@
             </table>
         </div>
         <script>
+            
+        function fraseAleatoria() {
+$("#spinner").toggle();
+$.get("http://localhost:3000/frases", trocaFraseAleatoria)
+.fail(function(){
+$("#erro").toggle();
+setTimeout(function(){
+$("#erro").toggle();
+},1500);
+})
+.always(function(){
+$("#spinner").toggle();
+});
+}
+            
+        function buscaFrase() {
+            $("#spinner").toggle();
+var fraseId = $("#frase-id").val();
+//criacao do objeto JS que guarda a id
+var dados = {id : fraseId};
+//passando objecto como segundo parametro
+$.get("http://localhost:3000/frases", dados, trocaFrase)
+.fail(function(){
+$("#erro").toggle();
+setTimeout(function(){
+$("#erro").toggle();
+},2000);
+})
+.always(function(){
+$("#spinner").toggle();
+});
+} 
+        function sincronizaPlacar(){
+var placar = [];
+var linhas = $("tbody>tr");
+linhas.each(function(){
+var usuario = $(this).find("td:nth-child(1)").text();
+var palavras = $(this).find("td:nth-child(2)").text();
+var score = {
+usuario: usuario,
+pontos: palavras
+};
+placar.push(score);
+var dados = {
+placar: placar
+};
+$.post("http://localhost:3000/placar", dados , function() {
+console.log("Placar sincronizado com sucesso");
+$(".tooltip").tooltipster("open");
+}).fail(function(){
+$(".tooltip").tooltipster("open").tooltipster("content",
+"Falha ao sincronizar");
+}).always(function(){ //novo
+setTimeout(function() {
+$(".tooltip").tooltipster("close");
+}, 1200);
+});
+});
+}
+        function atualizaPlacar(){
+$.get("http://localhost:3000/placar",function(data){
+    $(data).each(function(){
+var linha = novaLinha(this.usuario, this.pontos);
+linha.find(".botao-remover").click(removeLinha);
+$("tbody").append(linha);
+});
+});
+}
+        
+        var trocaFraseAleatoria = function(data) {
+            var frases = data;
+            console.log(frases);
+            $(".frase").text(frases[Math.floor(Math.random()*10)].texto);
+            
+        }
+            
+            
+            
+            
+            
+            
+        
         contagem = false;
+        $(".frase").text();
+            
 
         $(document).ready(function() {
 
@@ -154,7 +238,8 @@
 
         }
 
-
+        fraseAleatoria();
+        
         $(".campo-digitacao").on('input', atualiza); //função atualiza é executada  toda vez que o textarea muda
         </script>
 </body>
