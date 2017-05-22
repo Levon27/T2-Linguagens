@@ -34,7 +34,7 @@
         <!-- Botões abaixo do quadro-->
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">restore</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons botao-recomecar">restore</i></a>
         <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">assignment</i></a>
         <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">shuffle</i></a>
         <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">repeat_one</i></a>
@@ -44,9 +44,9 @@
             <div class="input-field col s12">
                 <select class="browser-default">
                     <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <option value="1">Lucas Rodrigues</option>
+                    <option value="2">Raul</option>
+                    <option value="3">Levon</option>
                 </select>
             </div>
         </div>
@@ -63,7 +63,10 @@
             var words = $('.frase').html().split(' ');
             $('.num-pal-frase').text(words.length + ' palavras');
 
-            $('.logo').click(function() {});
+            $('.botao-recomecar').click(function() {
+                $('.campo-digitacao').val('');
+                atualiza();
+            });
         });
 
 
@@ -73,7 +76,6 @@
             var campo = $(".campo-digitacao");
             var texto = $(".campo-digitacao").val(); //pega o texto digitado
             var frase = $(".frase").text();
-            console.log(texto);
 
 
             $('.caracteres').text(texto.length + ' caracteres');
