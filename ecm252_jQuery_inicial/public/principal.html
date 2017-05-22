@@ -28,7 +28,7 @@
         <div class="centraliza">
             <i class="small material-icons"> query_builder </i>
             <div id="my-timer">
-                <b id="show-time">10</b> seconds
+                <p id="show-time" style="display:inline;">10</p> segundos
             </div>
         </div>
         <!-- Quadro digitação -->
@@ -37,7 +37,7 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons botao-recomecar">restore</i></a>
-        <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">assignment</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons botao-placar">assignment</i></a>
         <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">shuffle</i></a>
         <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">repeat_one</i></a>
         <!-- Selecionar nome -->
@@ -55,8 +55,30 @@
         <div class="direita"><a class="btn-floating btn-large waves-effect waves-light yellow"><i class="material-icons" id="botao-sync">swap_vert</i></a></div>
         <div class='caracteres' style='text-align: center;'> 0 caracteres</div>
         <div class='num-pal-txta' style='text-align: center;'> 0 palavras</div>
+        <div class="plc">
+            <h3 style="text-align: center"> Placar </h3>
+            <table class="bordered centered">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>N° de palavras</th>
+                        <th>Remover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lucas</td>
+                        <td>300</td>
+                        <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light "><i class="material-icons">delete</i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <script>
+        contagem = false;
+
         $(document).ready(function() {
+            $('.plc').hide();
             $('select').material_select();
             $('.tooltipped').tooltip({
                 delay: 50
@@ -69,20 +91,23 @@
                 $('.campo-digitacao').val('');
                 atualiza();
             });
-
-
-            var settimmer = 0;
-            $(function() {
-                window.setInterval(function() {
-                    var timeCounter = $("b[id=show-time]").html();
-                    var updateTime = eval(timeCounter) - eval(1);
-                    $("b[id=show-time]").html(updateTime);
-                    if (updateTime == -1)
-                        $("b[id=show-time]").html('10');
-
-                }, 1000);
-
+            $('.botao-placar').click(function() {
+                $(".plc").toggle();
             });
+            if (contagem) {
+                var settimmer = 0;
+                $(function() {
+                    window.setInterval(function() {
+                        var timeCounter = $("p[id=show-time]").html();
+                        var updateTime = eval(timeCounter) - eval(1);
+                        $("p[id=show-time]").html(updateTime);
+                        if (updateTime == -1)
+                            $("p[id=show-time]").html('10');
+
+                    }, 1000);
+
+                });
+            }
         });
 
 
@@ -93,7 +118,7 @@
             var texto = $(".campo-digitacao").val(); //pega o texto digitado
             var frase = $(".frase").text();
 
-
+            contagem = true;
             $('.caracteres').text(texto.length + ' caracteres');
 
             if ($("textarea").val()) {
@@ -102,7 +127,7 @@
             } else
                 $('.num-pal-txta').text('0 palavras');
 
-            if (texto == frase) {
+            if (frase.indexOf(texto) !== -1) {
                 campo.css("border", "3px solid green");
 
             } else if (texto != frase) {
