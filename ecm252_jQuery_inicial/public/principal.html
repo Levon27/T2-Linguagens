@@ -6,12 +6,14 @@
     <title>ECM252 - jQuery</title>
     <link rel="stylesheet" type="text/css" href="css/estilos.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/libs/google-fonts.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <script src="js/jquery.js"></script>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <script type="text/javascript" src="js/selectize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/selectize.default.css" />
 </head>
 
 <body>
@@ -34,18 +36,27 @@
         <!-- Quadro digitação -->
         <textarea class="campo-digitacao"></textarea>
         <!-- Botões abaixo do quadro-->
-        <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons botao-recomecar">restore</i></a>
         <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons botao-placar">assignment</i></a>
         <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">shuffle</i></a>
         <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">repeat_one</i></a>
         <!-- Selecionar nome -->
-        _____
+        <!--
         <div class="select-usuarios">
             <div class="input-field col s12">
                 <select class="browser-default">
-                    <option value="" disabled selected>Choose your option</option>
+                    <option value="" disabled selected>Nome</option>
+                    <option value="1">Lucas Rodrigues</option>
+                    <option value="2">Raul</option>
+                    <option value="3">Levon</option>
+                </select>
+            </div>
+        </div>
+        -->
+        <div style="display: inline-block;">
+            <div class="input-field">
+                <select class="browser-default" style="width:120%">
                     <option value="1">Lucas Rodrigues</option>
                     <option value="2">Raul</option>
                     <option value="3">Levon</option>
@@ -78,11 +89,17 @@
         contagem = false;
 
         $(document).ready(function() {
+
             $('.plc').hide();
             $('select').material_select();
             $('.tooltipped').tooltip({
                 delay: 50
             });
+            $('select').selectize({
+                create: true,
+                sortField: 'text'
+            });
+
 
             var words = $('.frase').html().split(' ');
             $('.num-pal-frase').text(words.length + ' palavras');
