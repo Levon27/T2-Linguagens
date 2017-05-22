@@ -73,19 +73,22 @@
             var campo = $(".campo-digitacao");
             var texto = $(".campo-digitacao").val(); //pega o texto digitado
             var frase = $(".frase").text();
+            console.log(texto);
+
 
             $('.caracteres').text(texto.length + ' caracteres');
 
-            var words = $('.campo-digitacao').val().split(' ');
-            $('.num-pal-txta').text(words.length + ' palavras');
+            if ($("textarea").val()) {
+                var words = $('.campo-digitacao').val().split(' ');
+                $('.num-pal-txta').text(words.length + ' palavras');
+            } else
+                $('.num-pal-txta').text('0 palavras');
 
             if (texto == frase) {
                 campo.css("border", "3px solid green");
-                console.log("TEXTO IGUAL");
 
             } else if (texto != frase) {
                 campo.css("border", "3px solid red");
-                console.log("TEXTO DIFERENTE");
 
             }
 
