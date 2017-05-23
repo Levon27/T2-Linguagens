@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ECM252 - jQuery</title>
+    <link rel="stylesheet" type="text/css" href="css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/libs/google-fonts.css">
+    <script src="js/jquery.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+    <script type="text/javascript" src="slick/slick.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Logo Mauá -->
+        <img src="img/maua_logo.png" class="logo">
+        <!-- Efeitos -->
+        <div class="efeito">
+            <!-- Frase aleatória -->
+            <div class="campo-digitacao">
+                <div class="frase" class="Material Icons">soiheridugodfnbglknjdfcbklçncvklbnklcvn</div>
+                <div class="centraliza">
+                    <i class="small material-icons"> description </i>
+                    <div style = "font-size:80%" >19 palavras</div>
+                    <div class="centraliza">
+                        <i class="small material-icons"> query_builder </i>
+                        <div style = "font-size:80%"> 10 segundos </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Botões -->
+            <div class="campo-digitacao">
+                <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">restore</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">assignment</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">shuffle</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">repeat_one</i></a>
+                <div class="direita"><a class="btn-floating btn-large waves-effect waves-light yellow"><i class="material-icons" id="botao-sync">swap_vert</i></a></div>
+            </div>
+            <!-- Placar -->
+            <div class="campo-digitacao">
+                <h1 class="centraliza">Placar</h1>
+                <table style="width:100%" class="bordered">
+                    <tr>
+                        <th class="centraliza">Usuário</th>
+                        <th class="centraliza">N° palavras</th>
+                        <th class="centraliza">Remover ?</th>
+                    </tr>
+                    <tr>
+                        <td class="centraliza">Bob</td>
+                        <td class="centraliza">8ppm</td>
+                        <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light "><i class="material-icons">delete</i></a></td>
+                    </tr>
+                    <tr>
+                        <td class="centraliza">Alfácio</td>
+                        <td class="centraliza">20ppm</td>
+                        <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light "><i class="material-icons">delete</i></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- Fim efeitos -->
+        <div class="linha"></div>
+        <h6 class="centraliza"> Teste sua velocidade competindo contra seus amigos!</h6>
+        <div class="row">
+            <div class="col m6">
+                <div class="card" style="width:100%">
+                    <div class="card-content">
+                        <p style="font-size:80%">Placar dinâmico! Sincronizando com o servidor</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#" id="experimente">EXPERIMENTE AGORA!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col m6">
+                <div class="card" style="width:100%">
+                    <div class="card-content">
+                        <p style="font-size:80%">Frases aleatórias ou escolha diretamente em qual delas você quer competir</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#" id="experimente2">EXPERIMENTE AGORA!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Botões abaixo do quadro-->
+        <div class="centraliza" id="botao-jogue"><a class="waves-effect waves-light btn orange">Jogue</a></div>
+        <script>
+        $(document).ready(function() {
+            $('.efeito').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                adaptiveHeight: true
+            });
+        });
+
+
+        $('.single-item-rtl').slick({
+            rtl: true
+        });
+
+        var carrega = function() {
+            event.preventDefault();
+            window.location.href = "principal.html";
+        }
+
+        $("#botao-jogue").click(carrega);
+        $("#experimente").click(carrega);
+        $("#experimente2").click(carrega);
+        </script>
+</body>
+
+</html>
