@@ -49,8 +49,8 @@
             <div class="input-field">
                 <select class="browser-default" style="width:200%;">
                     <option value="1">Lucas Rodrigues</option>
-                    <option value="2">Raul</option>
-                    <option value="3">Levon</option>
+                    <option value="2">Raul Fritas</option>
+                    <option value="3">Levon Charrestian</option>
                 </select>
             </div>
         </div>
@@ -228,7 +228,7 @@
                         if (!acabou) {
 
                             $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + ($('.num-pal-txta').html()).replace(/\D/g, '') + '</td> <td><i  class="material-icons blue-text remove-placar">delete</i></td></tr>');
-
+                            $(".plc").show();
                             acabou = true;
                         }
 
