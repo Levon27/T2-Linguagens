@@ -195,6 +195,7 @@
 
 
             });
+
             $('.botao-placar').click(function() {
                 $(".plc").toggle();
             });
@@ -205,8 +206,11 @@
                 $("#show-time").html(time);
             });
 
-            $('.remove-placar').click(function() {
-                alert('ola');
+
+            $("body").on("click", '.remove-placar', function() {
+
+                $(this).closest('tr').remove();
+
             });
 
         });
@@ -223,7 +227,7 @@
                         $('textarea').css("background-color", "#F2F2F2");
                         if (!acabou) {
 
-                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + ($('.num-pal-txta').html()).replace(/\D/g, '') + '</td> <td><i  class="material-icons blue-text"><div class="remove-placar">delete</div></i></td></tr>');
+                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + ($('.num-pal-txta').html()).replace(/\D/g, '') + '</td> <td><i  class="material-icons blue-text remove-placar">delete</i></td></tr>');
 
                             acabou = true;
                         }
