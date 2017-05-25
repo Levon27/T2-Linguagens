@@ -205,6 +205,10 @@
                 $("#show-time").html(time);
             });
 
+            $('.remove-placar').click(function() {
+                alert('ola');
+            });
+
         });
 
         var contar = function() {
@@ -219,7 +223,7 @@
                         $('textarea').css("background-color", "#F2F2F2");
                         if (!acabou) {
 
-                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + ($('.num-pal-txta').html()).replace(/\D/g, '') + '</td> <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light " href =""><i class="material-icons">delete</i></a></td></tr>');
+                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + ($('.num-pal-txta').html()).replace(/\D/g, '') + '</td> <td><i  class="material-icons blue-text"><div class="remove-placar">delete</div></i></td></tr>');
 
                             acabou = true;
                         }
@@ -264,19 +268,6 @@
         }
 
         $(".campo-digitacao").on('input', atualiza); //função atualiza é executada  toda vez que o textarea muda
-
-        // ***  FUNÇÃO REMOVEDORA  ***
-
-        var removeItem = function(event) {
-            event.preventDefault();
-
-            var self = $(this);
-            self.closest("tr").hide();
-
-            atualizaDados();
-        };
-
-        $("#removedor").click(removeItem);
         </script>
 </body>
 
