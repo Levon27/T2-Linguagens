@@ -24,8 +24,8 @@
         <div class="frase" class="Material Icons"></div>
         <!-- Botoes em cima do quadro -->
         <div class='cent'>
-        <div class="loader"></div></div>
-
+            <div class="loader"></div>
+        </div>
         <div class="centraliza">
             <i class="small material-icons"> description </i>
             <div class='num-pal-frase'></div>
@@ -45,19 +45,6 @@
         <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons botao-placar">assignment</i></a>
         <a class="btn-floating btn-large waves-effect waves-light blue" id="renovar-frase"><i class="material-icons">shuffle</i></a>
         <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">repeat_one</i></a>
-        <!-- Selecionar nome -->
-        <!--
-         <div class="select-usuarios">
-             <div class="input-field col s12">
-                 <select class="browser-default">
-                     <option value="" disabled selected>Nome</option>
-                     <option value="1">Lucas Rodrigues</option>
-                     <option value="2">Raul</option>
-                     <option value="3">Levon</option>
-                 </select>
-             </div>
-         </div>
-         -->
         <div style="display: inline-block;">
             <div class="input-field">
                 <select class="browser-default" style="width:200%;">
@@ -81,218 +68,215 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Lucas</td>
-                        <td>300</td>
-                        <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light " href=""><i class="material-icons">delete</i></a></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
         <script>
-            var count;
-            var time = 0; //variavel global
-            //funçoes que pegamos do pdf do luiz
-            function fraseAleatoria() {
-                $("#spinner").toggle();
-                $.get("http://localhost:3000/frases", trocaFraseAleatoria)
-                    .fail(function() {
+        //variavel global
+        var count;
+        var time = 0;
+        var acabou = false;
+        //funçoes que pegamos do pdf do luiz
+        function fraseAleatoria() {
+            $("#spinner").toggle();
+            $.get("http://localhost:3000/frases", trocaFraseAleatoria)
+                .fail(function() {
+                    $("#erro").toggle();
+                    setTimeout(function() {
                         $("#erro").toggle();
-                        setTimeout(function() {
-                            $("#erro").toggle();
-                        }, 1500);
-                    })
-                    .always(function() {
-                        $("#spinner").toggle();
-                    });
-            }
+                    }, 1500);
+                })
+                .always(function() {
+                    $("#spinner").toggle();
+                });
+        }
 
-            function buscaFrase() {
-                $("#spinner").toggle();
-                var fraseId = $("#frase-id").val();
-                //criacao do objeto JS que guarda a id
-                var dados = {
-                    id: fraseId
+        function buscaFrase() {
+            $("#spinner").toggle();
+            var fraseId = $("#frase-id").val();
+            //criacao do objeto JS que guarda a id
+            var dados = {
+                id: fraseId
+            };
+            //passando objecto como segundo parametro
+            $.get("http://localhost:3000/frases", dados, trocaFrase)
+                .fail(function() {
+                    $("#erro").toggle();
+                    setTimeout(function() {
+                        $("#erro").toggle();
+                    }, 2000);
+                })
+                .always(function() {
+                    $("#spinner").toggle();
+                });
+
+        }
+
+        function sincronizaPlacar() {
+            var placar = [];
+            var linhas = $("tbody>tr");
+            linhas.each(function() {
+                var usuario = $(this).find("td:nth-child(1)").text();
+                var palavras = $(this).find("td:nth-child(2)").text();
+                var score = {
+                    usuario: usuario,
+                    pontos: palavras
                 };
-                //passando objecto como segundo parametro
-                $.get("http://localhost:3000/frases", dados, trocaFrase)
-                    .fail(function() {
-                        $("#erro").toggle();
-                        setTimeout(function() {
-                            $("#erro").toggle();
-                        }, 2000);
-                    })
-                    .always(function() {
-                        $("#spinner").toggle();
-                    });
-                
-            }
-
-            function sincronizaPlacar() {
-                var placar = [];
-                var linhas = $("tbody>tr");
-                linhas.each(function() {
-                    var usuario = $(this).find("td:nth-child(1)").text();
-                    var palavras = $(this).find("td:nth-child(2)").text();
-                    var score = {
-                        usuario: usuario,
-                        pontos: palavras
-                    };
-                    placar.push(score);
-                    var dados = {
-                        placar: placar
-                    };
-                    $.post("http://localhost:3000/placar", dados, function() {
-                        console.log("Placar sincronizado com sucesso");
-                        $(".tooltip").tooltipster("open");
-                    }).fail(function() {
-                        $(".tooltip").tooltipster("open").tooltipster("content",
-                            "Falha ao sincronizar");
-                    }).always(function() { //novo
-                        setTimeout(function() {
-                            $(".tooltip").tooltipster("close");
-                        }, 1200);
-                    });
+                placar.push(score);
+                var dados = {
+                    placar: placar
+                };
+                $.post("http://localhost:3000/placar", dados, function() {
+                    console.log("Placar sincronizado com sucesso");
+                    $(".tooltip").tooltipster("open");
+                }).fail(function() {
+                    $(".tooltip").tooltipster("open").tooltipster("content",
+                        "Falha ao sincronizar");
+                }).always(function() { //novo
+                    setTimeout(function() {
+                        $(".tooltip").tooltipster("close");
+                    }, 1200);
                 });
-            }
+            });
+        }
 
-            function atualizaPlacar() {
-                $.get("http://localhost:3000/placar", function(data) {
-                    $(data).each(function() {
-                        var linha = novaLinha(this.usuario, this.pontos);
-                        linha.find(".botao-remover").click(removeLinha);
-                        $("tbody").append(linha);
-                    });
+        function atualizaPlacar() {
+            $.get("http://localhost:3000/placar", function(data) {
+                $(data).each(function() {
+                    var linha = novaLinha(this.usuario, this.pontos);
+                    linha.find(".botao-remover").click(removeLinha);
+                    $("tbody").append(linha);
                 });
-            }
+            });
+        }
 
-            var trocaFraseAleatoria = function(data, tempo) {
-                var frases = data;
-                var id = Math.floor(Math.random() * 10);
-                $(".frase").text(frases[id].texto);
-                tempo = frases[id].tempo;
-                if (tempo != 0){
-                    time = tempo;
-                    var words = $('.frase').html().split(' ');
-                    $('.num-pal-frase').text(words.length + ' palavras');
-                    $("#show-time").html(time);
-                    $('.loader').hide();
-                }
-                
-            }
-
-            var resetaTempo = function() {
-                setTimeout(function() {
-                    console.log("funfou?");
-                }, tempo);
-            }
-
-            $(document).ready(function() {
-                fraseAleatoria();
-                $('.plc').hide();
-                $('select').material_select();
-                $('.tooltipped').tooltip({
-                    delay: 50
-                });
-                $('select').selectize({
-                    create: true,
-                    sortField: 'text'
-                });
-
+        var trocaFraseAleatoria = function(data, tempo) {
+            var frases = data;
+            var id = Math.floor(Math.random() * 10);
+            $(".frase").text(frases[id].texto);
+            tempo = frases[id].tempo;
+            if (tempo != 0) {
+                time = tempo;
                 var words = $('.frase').html().split(' ');
                 $('.num-pal-frase').text(words.length + ' palavras');
+                $("#show-time").html(time);
+                $('.loader').hide();
+            }
+        }
 
-                $('.botao-recomecar').click(function() {
-                    $('.campo-digitacao').val('');
-                    atualiza();
-                    $('textarea').prop('disabled', false);
-                    count = Number(time);
-                    $('textarea').css("background-color","white");
+        var resetaTempo = function() {
+            setTimeout(function() {
+                console.log("funfou?");
+            }, tempo);
+        }
 
-
-                });
-                $('.botao-placar').click(function() {
-                    $(".plc").toggle();
-                });
-
-                $('#renovar-frase').click(function() {
-                    fraseAleatoria();
-                    $('textarea').css("background-color","white");
-                    $("#show-time").html(time);
-
-                });
-
+        $(document).ready(function() {
+            fraseAleatoria();
+            $('.plc').hide();
+            $('select').material_select();
+            $('.tooltipped').tooltip({
+                delay: 50
+            });
+            $('select').selectize({
+                create: true,
+                sortField: 'text'
             });
 
-            var adicionaTabela = function(event) {
+            var words = $('.frase').html().split(' ');
+            $('.num-pal-frase').text(words.length + ' palavras');
 
-                $('#tabela').append('<tr><td>Lucas</td> <td>300</td> <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light " href =""><i class="material-icons">delete</i></a></td></tr>');
-
-            }
-            var contar = function() {
+            $('.botao-recomecar').click(function() {
+                $('.campo-digitacao').val('');
+                atualiza();
+                $('textarea').prop('disabled', false);
                 count = Number(time);
-                countdown = setInterval(function() {
-                    if(count != 0)
-                        $('#show-time').html(count-1);
-                    if (count != 0){
+                $('textarea').css("background-color", "white");
+                acabou = false;
+
+
+            });
+            $('.botao-placar').click(function() {
+                $(".plc").toggle();
+            });
+
+            $('#renovar-frase').click(function() {
+                fraseAleatoria();
+                $('textarea').css("background-color", "white");
+                $("#show-time").html(time);
+            });
+
+        });
+
+        var contar = function() {
+            count = Number(time);
+            countdown = setInterval(function() {
+                    if (count != 0)
+                        $('#show-time').html(count - 1);
+                    if (count != 0) {
                         count--;
-                    }else{
+                    } else {
                         $('textarea').prop('disabled', true);
-                         $('textarea').css("background-color","#F2F2F2");
+                        $('textarea').css("background-color", "#F2F2F2");
+                        if (!acabou) {
+
+                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + $('.num-pal-txta').html() + '</td> <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light " href =""><i class="material-icons">delete</i></a></td></tr>');
+
+                            acabou = true;
+                        }
 
                     }
 
+                },
+                1000);
+        }
 
-                }, 1000);
+        var contando = true;
+        var atualiza = function() {
+            if (contando) {
+                contar();
+                contando = false;
             }
 
-            var contando = true;
-            var atualiza = function() {
-                if (contando) {
-                    contar();
-                    contando = false;
-                }
+            var campo = $(".campo-digitacao");
+            var texto = $(".campo-digitacao").val(); //pega o texto digitado
+            var frase = $(".frase").text();
 
-                var campo = $(".campo-digitacao");
-                var texto = $(".campo-digitacao").val(); //pega o texto digitado
-                var frase = $(".frase").text();
+            contagem = true;
+            $('.caracteres').text(texto.length + ' caracteres');
 
-                contagem = true;
-                $('.caracteres').text(texto.length + ' caracteres');
+            if ($("textarea").val()) {
 
-                if ($("textarea").val()) {
-                    
-                } else
-                    $('.num-pal-txta').text('0 palavras');
+            } else
+                $('.num-pal-txta').text('0 palavras');
 
-                if (frase.indexOf(texto) !== -1) {
-                    campo.css("border", "3px solid green");
-                    var txt = $('.campo-digitacao').val();
-                    if(txt[txt.length-1] != ' ' && txt.length>1)
-                        txt += ' ';
-                    var words = txt.split(' ');
-                    $('.num-pal-txta').text(words.length-1 + ' palavras');
-                } else if (texto != frase) {
-                    campo.css("border", "3px solid red");
-
-                }
+            if (frase.indexOf(texto) !== -1) {
+                campo.css("border", "3px solid green");
+                var txt = $('.campo-digitacao').val();
+                if (txt[txt.length - 1] != ' ' && txt.length > 1)
+                    txt += ' ';
+                var words = txt.split(' ');
+                $('.num-pal-txta').text(words.length - 1 + ' palavras');
+            } else if (texto != frase) {
+                campo.css("border", "3px solid red");
 
             }
 
-            $(".campo-digitacao").on('input', atualiza); //função atualiza é executada  toda vez que o textarea muda
+        }
 
-            // ***  FUNÇÃO REMOVEDORA  ***
+        $(".campo-digitacao").on('input', atualiza); //função atualiza é executada  toda vez que o textarea muda
 
-            var removeItem = function(event) {
-                event.preventDefault();
+        // ***  FUNÇÃO REMOVEDORA  ***
 
-                var self = $(this);
-                self.closest("tr").hide();
+        var removeItem = function(event) {
+            event.preventDefault();
 
-                atualizaDados();
-            };
+            var self = $(this);
+            self.closest("tr").hide();
 
-            $("#removedor").click(removeItem);
+            atualizaDados();
+        };
+
+        $("#removedor").click(removeItem);
         </script>
 </body>
 
