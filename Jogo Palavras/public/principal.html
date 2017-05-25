@@ -219,7 +219,7 @@
                         $('textarea').css("background-color", "#F2F2F2");
                         if (!acabou) {
 
-                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + $('.num-pal-txta').html() + '</td> <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light " href =""><i class="material-icons">delete</i></a></td></tr>');
+                            $('#tabela').append('<tr><td>' + $("select option:selected").text() + '</td> <td>' + ($('.num-pal-txta').html()).replace(/\D/g, '') + '</td> <td class="centraliza"><a class="btn-floating btn-large waves-effect waves-light " href =""><i class="material-icons">delete</i></a></td></tr>');
 
                             acabou = true;
                         }
